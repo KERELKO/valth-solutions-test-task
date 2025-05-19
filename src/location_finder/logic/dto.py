@@ -22,3 +22,9 @@ class CountryInfoDTO:
 class NameFrequencyDTO:
     count: int
     name: str
+
+
+@dataclass(slots=True, eq=False)
+class CountryProbabilityForNameDTO:
+    probability: float
+    country_code: str

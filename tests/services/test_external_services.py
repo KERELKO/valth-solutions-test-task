@@ -2,7 +2,7 @@ from pprint import pprint
 import httpx
 import pytest
 
-from loc_by_name.logic.services.external import ExternalCountryService
+from location_finder.logic.services.external import ExternalCountryService
 
 
 @pytest.mark.asyncio

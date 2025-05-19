@@ -9,7 +9,7 @@ class Country(models.Model):
     name = models.CharField(max_length=100)
     probability = models.FloatField()
     count_of_requests = models.IntegerField(null=False, default=1)
-    last_accessed = models.DateTimeField(null=True)
+    last_accessed_date = models.DateTimeField(null=True)
 
     country = ArrayField(models.CharField(max_length=100), null=False)
     region = ArrayField(models.CharField(max_length=100), null=False)
@@ -31,5 +31,24 @@ class Country(models.Model):
         indexes = [models.Index(fields=["name"]), GinIndex(fields=["country"])]
         app_label = "logic"
 
-    def asdict(self) -> dict:
-        return model_to_dict(self)
+    def asdict(self, remove_non_country_fields: bool = False) -> dict:
+        data = model_to_dict(self)
+
+        if remove_non_country_fields:
+            data.pop("probability")
+            data.pop("name")
+            data.pop("count_of_requests")
+            data.pop("last_accessed")
+
+        return data
+
+    def get_country_data(self) -> dict:
+        return self.asdict(remove_non_country_fields=True)
+
+    def get_metrics_data(self) -> dict:
+        return {
+            "name": self.name,
+            "last_accessed_date": self.last_accessed_date,
+            "probability": self.probability,
+            "count_of_requests": self.count_of_requests,
+        }

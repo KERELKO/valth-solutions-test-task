@@ -2,8 +2,8 @@ from datetime import datetime
 
 from django.db.models import Q
 
-from loc_by_name.core.exceptions import ServiceException
-from loc_by_name.logic.dto import NameFrequencyDTO
+from location_finder.core.exceptions import ServiceException
+from location_finder.logic.dto import NameFrequencyDTO
 
 from ..models import Country
 
@@ -55,7 +55,7 @@ class ORMCountryService:
         if count_of_requests is not None:
             country.count_of_requests = count_of_requests
         if last_accessed_date is not None:
-            country.last_accessed = last_accessed_date
+            country.last_accessed_date = last_accessed_date
         await country.asave()
         return country
 

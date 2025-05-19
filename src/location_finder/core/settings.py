@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "loc_by_name.logic.apps.LogicConfig",
+    "location_finder.logic.apps.LogicConfig",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "loc_by_name.core.urls"
+ROOT_URLCONF = "location_finder.core.urls"
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "loc_by_name.core.wsgi.application"
+WSGI_APPLICATION = "location_finder.core.wsgi.application"
 
 
 # Database

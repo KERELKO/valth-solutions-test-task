@@ -1,35 +1,37 @@
 from pprint import pprint
 import httpx
 
-from loc_by_name.core.exceptions import ServiceException
-from loc_by_name.logic.dto import CountryInfoDTO
+from location_finder.core.exceptions import ServiceException
+from location_finder.logic.dto import CountryInfoDTO, CountryProbabilityForNameDTO
 
 
 class ExternalCountryService:
     _base_nationalize_url: str = "https://api.nationalize.io"
     _base_rest_countries_url: str = "https://restcountries.com/v3.1"
 
+    def __init__(self, client: httpx.AsyncClient):
+        self.client = client
+
     async def get_countries_by_person_name(
         self,
         person_name: str,
-        client: httpx.AsyncClient,
-    ) -> list[dict]:
-        """Returns list where each element is a dict containing:
-        * `country_id`: str (country code e.g. US)
-        * `probability`: float (e.g. 0.114)
-        """
-        response = await client.get(f"{self._base_nationalize_url}?name={person_name}")
+    ) -> list[CountryProbabilityForNameDTO]:
+        """Returns list with countries probabilities by person name"""
+        response = await self.client.get(
+            f"{self._base_nationalize_url}?name={person_name}"
+        )
         if response.is_success is False:
             raise ServiceException(msg=f"Invalid country name: name={person_name}")
         data = response.json()
-        return data["country"]
+        return [
+            CountryProbabilityForNameDTO(
+                country_code=c["country_id"], probability=c["probability"]
+            )
+            for c in data["country"]
+        ]
 
-    async def get_country_info_by_code(
-        self,
-        country_code: str,
-        client: httpx.AsyncClient,
-    ) -> CountryInfoDTO:
-        response = await client.get(
+    async def get_country_info_by_code(self, country_code: str) -> CountryInfoDTO:
+        response = await self.client.get(
             f"{self._base_rest_countries_url}/alpha/{country_code}"
         )
         if response.is_success is False:

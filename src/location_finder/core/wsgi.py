@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "loc_by_name.core.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "location_finder.core.settings")
 
 application = get_wsgi_application()

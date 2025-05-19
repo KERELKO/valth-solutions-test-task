@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from loc_by_name.api.v1 import api
+from location_finder.api.v1 import api
 
 
 urlpatterns = [
