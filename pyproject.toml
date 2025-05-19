@@ -16,3 +16,13 @@ dependencies = [
 dev = [
     "pytest>=8.3.5",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests"]
+
+[tool.ruff]
+exclude = ["migrations"]

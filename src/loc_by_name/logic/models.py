@@ -21,3 +21,6 @@ class Country(models.Model):
     coat_of_arms_png = models.URLField(null=True)
     coat_of_arms_svg = models.URLField(null=True)
     borders_with = ArrayField(models.CharField(max_length=100), null=True)
+
+    class Meta:
+        plural_name = "countries"
