@@ -3,4 +3,4 @@ from .handlers import router
 
 
 api = NinjaAPI()
-api.add_router("/names/", router)
+api.add_router("/", router)
