@@ -15,3 +15,7 @@ up:
 .PHONY: createsuperuser
 createsuperuser:
 	docker exec -it ${APP} python manage.py createsuperuser
+
+.PHONY: tests
+tests:
+	docker exec -it ${APP} pytest tests/

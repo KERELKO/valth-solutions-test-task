@@ -70,7 +70,6 @@ class GetCountriesByNameUseCase:
 
             # If country already exists in storage: store country data with new name and probability
             if stored_country:
-                print(2)
                 new_country_info = await self.country_storage.store_country(
                     probability=ex_country.probability,
                     name=name,

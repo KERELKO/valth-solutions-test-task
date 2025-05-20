@@ -1,4 +1,3 @@
-from pprint import pprint
 import httpx
 
 from location_finder.core.exceptions import ServiceException
@@ -38,7 +37,6 @@ class ExternalCountryService:
             raise ServiceException(msg=f"Invalid country code: code={country_code}")
         data = response.json()[0]
 
-        pprint(data)
         capital = data.get("capital", None)
         if capital is not None:
             capital = capital[0]

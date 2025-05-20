@@ -41,7 +41,6 @@ class CountryInfoResponseSchema(Schema):
             google_maps=info.country.google_maps,
             open_street_maps=info.country.open_street_maps,
         )
-        print(result)
         return result
 
 
