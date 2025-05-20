@@ -24,7 +24,7 @@ class ORMCountryService:
             q &= Q(name=person_name.lower())
 
         if last_accessed_date is not None:
-            q &= Q(last_accessed__gte=last_accessed_date)
+            q &= Q(last_accessed_date__gte=last_accessed_date)
 
         countries = Country.objects.filter(q)[:limit]
         return [c async for c in countries]
@@ -37,7 +37,7 @@ class ORMCountryService:
             name=name.lower(),
             probability=probability,
             count_of_requests=1,
-            last_accessed=datetime.now(),
+            last_accessed_date=datetime.now(),
         )
         await country.asave()
         return country
@@ -66,7 +66,7 @@ class ORMCountryService:
     ) -> list[NameFrequencyDTO]:
         """Return the most frequent names by country code"""
         countries = Country.objects.filter(
-            country__contains=country_code,
+            country__contains=[country_code],
         ).order_by("-count_of_requests")[:limit]
         return [
             NameFrequencyDTO(count=c.count_of_requests, name=c.name)

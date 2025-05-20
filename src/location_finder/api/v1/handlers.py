@@ -18,16 +18,16 @@ router = Router()
 country_storage = ORMCountryService()
 
 
-@router.get("/names", response=CountryInfoResponseSchema)
+@router.get("/names", response=list[CountryInfoResponseSchema])
 async def get_info_by_name_handler(
     request: HttpRequest,
     name: str,
 ) -> list[CountryInfoResponseSchema] | HttpResponseNotFound:
     async with httpx.AsyncClient() as client:
-        get_names = GetCountriesByNameUseCase(
+        get_countries = GetCountriesByNameUseCase(
             country_storage, ExternalCountryService(client)
         )
-        result = await get_names(name)
+        result = await get_countries(name)
 
     if not result:
         return HttpResponseNotFound()
@@ -35,7 +35,7 @@ async def get_info_by_name_handler(
     return [CountryInfoResponseSchema.from_collected_country_info(d) for d in result]
 
 
-@router.get("/popular-names", response=NameFrequencyResponseSchema)
+@router.get("/popular-names", response=list[NameFrequencyResponseSchema])
 async def get_popular_names(
     request: HttpRequest,
     country_code: str,

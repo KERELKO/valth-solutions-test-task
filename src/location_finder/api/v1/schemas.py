@@ -22,13 +22,13 @@ class CountryInfoResponseSchema(Schema):
 
     @classmethod
     def from_collected_country_info(cls, info: CollectedCountryInfo) -> Self:
-        return cls(
+        result = cls(
             probability=info.probability,
             country_name=info.country.name,
             region=info.country.region,
             independent=info.country.independent,
             capital_coords=(
-                info.country.capital_coords[0],
+                info.country.capital_coords[0],  # type: ignore
                 info.country.capital_coords[1],  # type: ignore
             ),
             borders_with=info.country.borders_with,
@@ -41,6 +41,8 @@ class CountryInfoResponseSchema(Schema):
             google_maps=info.country.google_maps,
             open_street_maps=info.country.open_street_maps,
         )
+        print(result)
+        return result
 
 
 class NameFrequencyResponseSchema(Schema):

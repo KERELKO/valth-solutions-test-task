@@ -35,15 +35,22 @@ class Country(models.Model):
         data = model_to_dict(self)
 
         if remove_non_country_fields:
+            data.pop("id")
             data.pop("probability")
             data.pop("name")
             data.pop("count_of_requests")
-            data.pop("last_accessed")
+            data.pop("last_accessed_date")
 
         return data
 
     def get_country_data(self) -> dict:
-        return self.asdict(remove_non_country_fields=True)
+        data = self.asdict(remove_non_country_fields=True)
+        data["name"] = data.pop("country")
+        data["capital_coords"] = (
+            data.pop("capital_latitude"),
+            data.pop("capital_longitude"),
+        )
+        return data
 
     def get_metrics_data(self) -> dict:
         return {
@@ -52,3 +59,6 @@ class Country(models.Model):
             "probability": self.probability,
             "count_of_requests": self.count_of_requests,
         }
+
+    def __str__(self) -> str:
+        return f'{self.name.capitalize()} ({','.join(self.country)})'

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass(slots=True, eq=False)
@@ -28,3 +29,11 @@ class NameFrequencyDTO:
 class CountryProbabilityForNameDTO:
     probability: float
     country_code: str
+
+
+@dataclass(slots=True, eq=False)
+class MetricsDTO:
+    count_of_requests: int
+    name: str
+    last_accessed_date: datetime
+    probability: float
